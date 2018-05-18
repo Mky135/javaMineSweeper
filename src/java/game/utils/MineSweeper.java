@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class MineSweeper
 {
-    private Tile[][] titles;
+    private Tile[][] board;
 
     private int rows;
     private int columns;
@@ -17,7 +17,7 @@ public class MineSweeper
         this.columns = columns;
         this.ratio = ratio;
 
-        titles = new Tile[rows][columns];
+        board = new Tile[rows][columns];
 
         genBoard();
     }
@@ -29,9 +29,17 @@ public class MineSweeper
         {
             for(int col = 0; col < columns; col++)
             {
-                if(titles[row][col] == null)
+                if(board[row][col] == null)
                 {
-                    titles[row][col] = new Tile(String.valueOf(minesNearBy(row, col)));
+                    int minesNearBy = minesNearBy(row, col);
+                    if(minesNearBy == 0)
+                    {
+                        board[row][col] = new Tile(" ");
+                    }
+                    else
+                    {
+                        board[row][col] = new Tile(String.valueOf(minesNearBy));
+                    }
                 }
             }
         }
@@ -47,7 +55,7 @@ public class MineSweeper
         {
             int tile = Math.abs(r.nextInt((rows - 1) * (columns - 1)));
 
-            if(titles[(tile / rows)][tile % rows] != null)
+            if(board[(tile / rows)][tile % rows] != null)
             {
                 if(tile < ((rows - 1) * (columns - 1)))
                 { tile++; }
@@ -55,7 +63,7 @@ public class MineSweeper
             }
 
             //set tile
-            titles[(tile / rows)][tile % rows] = new Tile(mine);
+            board[(tile / rows)][tile % rows] = new Tile(mine);
         }
     }
 
@@ -69,9 +77,9 @@ public class MineSweeper
             {
                 for(int c = -1; c <= 1; c++)
                 {
-                    if(titles[row + r][column + c] != null)
+                    if(board[row + r][column + c] != null)
                     {
-                        if(titles[row + r][column + c].getText().equalsIgnoreCase(mine))
+                        if(board[row + r][column + c].getText().equalsIgnoreCase(mine))
                         { count++; }
                     }
                 }
@@ -97,9 +105,9 @@ public class MineSweeper
                 {
                     for(int c = 0; c <= 1; c++)
                     {
-                        if(titles[row + r][column + c] != null)
+                        if(board[row + r][column + c] != null)
                         {
-                            if(titles[row + r][column + c].getText().equalsIgnoreCase(mine))
+                            if(board[row + r][column + c].getText().equalsIgnoreCase(mine))
                             { count++; }
                         }
                     }
@@ -111,9 +119,9 @@ public class MineSweeper
                 {
                     for(int c = -1; c <= 0; c++)
                     {
-                        if(titles[row + r][column + c] != null)
+                        if(board[row + r][column + c] != null)
                         {
-                            if(titles[row + r][column + c].getText().equalsIgnoreCase(mine))
+                            if(board[row + r][column + c].getText().equalsIgnoreCase(mine))
                             { count++; }
                         }
                     }
@@ -125,9 +133,9 @@ public class MineSweeper
                 {
                     for(int c = -1; c <= 1; c++)
                     {
-                        if(titles[row + r][column + c] != null)
+                        if(board[row + r][column + c] != null)
                         {
-                            if(titles[row + r][column + c].getText().equalsIgnoreCase(mine))
+                            if(board[row + r][column + c].getText().equalsIgnoreCase(mine))
                             { count++; }
                         }
                     }
@@ -140,14 +148,14 @@ public class MineSweeper
             {
                 for(int r = -1; r <= 0; r++)
                 {
-                    if(titles[row + r][column] != null)
+                    if(board[row + r][column] != null)
                     {
-                        if(titles[row + r][column].getText().equalsIgnoreCase(mine))
+                        if(board[row + r][column].getText().equalsIgnoreCase(mine))
                         { count++; }
                     }
-                    if(titles[row + r][column + 1] != null)
+                    if(board[row + r][column + 1] != null)
                     {
-                        if(titles[row + r][column + 1].getText().equalsIgnoreCase(mine))
+                        if(board[row + r][column + 1].getText().equalsIgnoreCase(mine))
                         { count++; }
                     }
                 }
@@ -158,9 +166,9 @@ public class MineSweeper
                 {
                     for(int c = -1; c <= 0; c++)
                     {
-                        if(titles[row + r][column + c] != null)
+                        if(board[row + r][column + c] != null)
                         {
-                            if(titles[row + r][column + c].getText().equalsIgnoreCase(mine))
+                            if(board[row + r][column + c].getText().equalsIgnoreCase(mine))
                             { count++; }
                         }
                     }
@@ -172,9 +180,9 @@ public class MineSweeper
                 {
                     for(int c = -1; c <= 1; c++)
                     {
-                        if(titles[row + r][column + c] != null)
+                        if(board[row + r][column + c] != null)
                         {
-                            if(titles[row + r][column + c].getText().equalsIgnoreCase(mine))
+                            if(board[row + r][column + c].getText().equalsIgnoreCase(mine))
                             { count++; }
                         }
                     }
@@ -185,14 +193,14 @@ public class MineSweeper
         {
             for(int r=-1; r<=1; r++)
             {
-                if(titles[row + r][column] != null)
+                if(board[row + r][column] != null)
                 {
-                    if(titles[row + r][column].getText().equalsIgnoreCase(mine))
+                    if(board[row + r][column].getText().equalsIgnoreCase(mine))
                     { count++; }
                 }
-                if(titles[row + r][column + 1] != null)
+                if(board[row + r][column + 1] != null)
                 {
-                    if(titles[row + r][column + 1].getText().equalsIgnoreCase(mine))
+                    if(board[row + r][column + 1].getText().equalsIgnoreCase(mine))
                     { count++; }
                 }
             }
@@ -201,14 +209,14 @@ public class MineSweeper
         {
             for(int r=-1; r<=1; r++)
             {
-                if(titles[row + r][column + -1] != null)
+                if(board[row + r][column + -1] != null)
                 {
-                    if(titles[row + r][column + -1].getText().equalsIgnoreCase(mine))
+                    if(board[row + r][column + -1].getText().equalsIgnoreCase(mine))
                     { count++; }
                 }
-                if(titles[row + r][column] != null)
+                if(board[row + r][column] != null)
                 {
-                    if(titles[row + r][column].getText().equalsIgnoreCase(mine))
+                    if(board[row + r][column].getText().equalsIgnoreCase(mine))
                     { count++; }
                 }
             }
@@ -217,9 +225,14 @@ public class MineSweeper
         return count;
     }
 
+    public Tile[][] getBoard()
+    {
+        return board;
+    }
+
     public void printBoard()
     {
-        for(Tile[] rows : titles)
+        for(Tile[] rows : board)
         {
             for(Tile column : rows)
             {

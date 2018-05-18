@@ -2,20 +2,17 @@ package game.utils;
 
 import javafx.scene.control.Button;
 
-public class Tile
+public class Tile extends Button
 {
     private String text;
 
     public Tile(String string)
     {
+        super(string);
         this.text = string;
-//        setText(string);
+        setMaxSize(30,30);
     }
 
-    public String getText()
-    {
-        return text;
-    }
 
     @Override
     public String toString()
